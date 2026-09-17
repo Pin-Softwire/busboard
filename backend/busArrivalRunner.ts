@@ -45,15 +45,22 @@ export default class tfiRunner {
         try {
             const response = await fetch(stopPointsNearbyReq(latitude, longitude, SEARCH_RADIUS))
             const responseJson = await response.json()
+            if (!Array.isArray(responseJson.stopPoints)) {
+                console.error("TfL StopPoint search did not return stopPoints:", responseJson)
+                return []
+            }
             const stopPoints = responseJson.stopPoints
                 .map((stopPoint: any) => ({
                     id: stopPoint.id,
-                    commonName: stopPoint.commonName
+                    commonName: stopPoint.commonName,
+                    lat: stopPoint.lat,
+                    lon: stopPoint.lon
                 }))
             return stopPoints
 
         } catch (error:any) {
             console.error(error)
+            return []
         } finally {
             console.log("Stop points request successful")
         }
@@ -76,6 +83,7 @@ export default class tfiRunner {
             return arrivals
         } catch (error:any) {
             console.error(error)
+            return []
         } finally {
             console.log("Arrival request successful")
         }
@@ -103,7 +111,18 @@ export default class tfiRunner {
         
         return arrivalsPerStop;
 
+    }
+    
+    async runApiLatLon(lat: number, lon: number) {
+        const stopPoints = await this.getStopPointsNearby(lat, lon);
+        const stopsWithArrivals = await Promise.all(
+            stopPoints.map(async (stopPoint: any) => ({
+                ...stopPoint,
+                arrivals: await this.getBusArrivals(stopPoint.id)
+            }))
+        );
 
+        return stopsWithArrivals;
     }
 
 }

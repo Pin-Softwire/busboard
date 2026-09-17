@@ -1,0 +1,59 @@
+.map-wrapper {
+  position: relative;
+  width: 70vmin;
+  height: 70vmin;
+  margin: 0 auto;
+}
+
+.spinner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ccc;
+  border-top-color: orange;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.black-marker-pin {
+  width: 20px;
+  height: 20px;
+  background: black;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.platform-badge {
+  display: inline-block;
+  background: orange;
+  color: black;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.route-badge {
+  display: inline-block;
+  background: black;
+  color: white;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+}
