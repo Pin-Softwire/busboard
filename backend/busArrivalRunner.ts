@@ -54,7 +54,8 @@ export default class tfiRunner {
                     id: stopPoint.id,
                     commonName: stopPoint.commonName,
                     lat: stopPoint.lat,
-                    lon: stopPoint.lon
+                    lon: stopPoint.lon,
+                    distance: stopPoint.distance
                 }))
             return stopPoints
 
